@@ -133,9 +133,9 @@ int main()
 	if (numberMaxNumber == 0)
 	{
 		printf("Numbers are the same!");
-		return 0;
 		delete[] number1;
 		delete[] number2;
+		return 0;
 	}
 	printf("%d\n", numberMaxNumber);
 	delete[] number1;
