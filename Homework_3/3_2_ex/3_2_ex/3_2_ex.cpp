@@ -3,7 +3,6 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <time.h>
-#include <iostream>
 
 int middle(int first, int firstIndex, int second, int secondIndex, int third, int thirdIndex)
 {
@@ -263,6 +262,5 @@ int main()
 	scanf("%d", &countNumbers);
 	checkingPresence(length, randomArray, countNumbers, maximum);
 	delete[] randomArray;
-	system("pause");
 	return 0;
 }
