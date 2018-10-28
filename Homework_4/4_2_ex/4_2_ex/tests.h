@@ -1,13 +1,10 @@
 #pragma once
 
-// проверяет работу функции findOftenElement
-
+/// проверяет работу функции findOftenElement
 void compareFind(int length, int sortArray[], int answer);
 
-// проверяет работу функции myQuickSort
-
+/// проверяет работу функции myQuickSort
 void compareSort(int length, int sortArray[]);
 
-// объявляет данные для проверки и отправляет их в функции, тестирующие отдельные функции
-
+/// считывает данные для проверки из файла и отправляет их в функции, тестирующие отдельные функции
 void tests();
