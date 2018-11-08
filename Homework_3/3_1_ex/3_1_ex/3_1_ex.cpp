@@ -73,9 +73,9 @@ void swap(int sortArray[], int index1, int index2)
 	sortArray[index2] = tmp;
 }
 
-void insertionSort(int sortArray[], int left, int rigth)
+void insertionSort(int sortArray[], int left, int right)
 {
-	for (int i = left + 1; i <= rigth; ++i)
+	for (int i = left + 1; i <= right; ++i)
 	{
 		int sortElement = sortArray[i];
 		int index = i;
