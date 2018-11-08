@@ -135,11 +135,37 @@ void quickSort(int sortArray[], int left, int right)
 	}
 }
 
+int findOftenElement(int length, int sortArray[])
+{
+	int oftenElement = sortArray[0];
+	int countOftenElement = 1;
+	int maxOftenElement = sortArray[0];
+	int maxCountOftenElement = -1;
+	for (int i = 1; i < length; ++i)
+	{
+		if (sortArray[i] == oftenElement)
+		{
+			++countOftenElement;
+		}
+		if ((sortArray[i] != oftenElement) || (i == length - 1))
+		{
+			if (countOftenElement > maxCountOftenElement)
+			{
+				maxOftenElement = oftenElement;
+				maxCountOftenElement = countOftenElement;
+			}
+			countOftenElement = 1;
+			oftenElement = sortArray[i];
+		}
+	}
+	return maxOftenElement;
+}
+
 void inputArray(int length, int block[])
 {
 	for (int i = 0; i < length; ++i)
 	{
-		block[i] = rand() % 200 - 100;
+		block[i] = rand() % 10;
 	}
 }
 
@@ -152,7 +178,12 @@ void outputArray(int length, int block[])
 }
 //////////////////////////////////////////
 
-void compare(int length, int sortArray[])
+void compareFind(int length, int sortArray[], int answer)
+{
+	assert(findOftenElement(length, sortArray) == answer);
+}
+
+void compareSort(int length, int sortArray[])
 {
 	quickSort(sortArray, 0, length - 1);
 	for (int i = 0; i < length - 1; ++i)
@@ -163,17 +194,21 @@ void compare(int length, int sortArray[])
 
 void tests()
 {
-	const int testCount = 20;
-	int testOk = 0;
-	while (testOk < 20)
-	{
-		int length = rand() % 500 + 9;
-		int *sortArray = new int[length] {};
-		inputArray(length, sortArray);
-		compare(length, sortArray);
-		++testOk;
-		delete[] sortArray;
-	}
+	const int testLen1 = 6;
+	int testArray1[testLen1] = { 1, 0, 1, 5, 5, 5 };
+	int testAnswer1 = 5;
+	const int testLen2 = 7;
+	int testArray2[testLen2] = { 1, 0, 1, 0, 0, 1, -1 };
+	int testAnswer2 = 0;
+	const int testLen3 = 6;
+	int testArray3[testLen3] = { 3, 1, 2, 2, 2, 3 };
+	int testAnswer3 = 2;
+	compareSort(testLen1, testArray1);
+	compareFind(testLen1, testArray1, testAnswer1);
+	compareSort(testLen2, testArray2);
+	compareFind(testLen2, testArray2, testAnswer2);
+	compareSort(testLen3, testArray3);
+	compareFind(testLen3, testArray3, testAnswer3);
 }
 
 //////////////////////////////////////////
@@ -183,8 +218,9 @@ int main()
 	printf("Now program is testing, please, wait.\n");
 	tests();
 	printf("Tests are ok!\n");
+	printf("If there is more then one the most common element, program will output the first of these elements.\n");
 	srand(time(nullptr));
-	int length = rand() % 500 + 9;
+	int length = rand() % 10 + 1;
 	int *sortArray = new int[length] {};
 	inputArray(length, sortArray);
 	printf("Array:\n");
@@ -194,6 +230,9 @@ int main()
 	int right = length - 1;
 	quickSort(sortArray, left, right);
 	outputArray(length, sortArray);
+	printf("\n");
+	int oftenElement = findOftenElement(length, sortArray);
+	printf("%d", oftenElement);
 	delete[] sortArray;
 	return 0;
 }
