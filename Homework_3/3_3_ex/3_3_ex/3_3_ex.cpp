@@ -111,7 +111,6 @@ void quickSort(int sortArray[], int left, int right)
 		while (indexLeft < indexRight)
 		{
 			while ((sortArray[indexLeft] <= supportElement) && (indexLeft < indexRight))
-<<<<<<< HEAD:Homework_3/3_3_ex/3_3_ex/3_3_ex.cpp
 			{
 				++indexLeft;
 			}
@@ -157,29 +156,7 @@ int findOftenElement(int length, int sortArray[])
 			}
 			countOftenElement = 1;
 			oftenElement = sortArray[i];
-=======
-			{
-				++indexLeft;
-			}
-			while ((sortArray[indexRight] > supportElement) && (indexLeft < indexRight))
-			{
-				--indexRight;
-			}
-			swap(sortArray, indexLeft, indexRight);
->>>>>>> master:Homework_3/3_1_ex/3_1_ex/3_1_ex.cpp
 		}
-		int left1 = left;
-		int right1 = indexLeft - 1;
-		int left2 = indexLeft;
-		int right2 = right;
-		int length2 = length - left2;
-		int length1 = length - length2;
-		quickSort(sortArray, left1, right1);
-		quickSort(sortArray, left2, right2);
-	}
-	else
-	{
-		insertionSort(sortArray, left, right);
 	}
 	return maxOftenElement;
 }
@@ -203,14 +180,11 @@ void outputArray(int length, int block[])
 
 void compareFind(int length, int sortArray[], int answer)
 {
-<<<<<<< HEAD:Homework_3/3_3_ex/3_3_ex/3_3_ex.cpp
 	assert(findOftenElement(length, sortArray) == answer);
 }
 
 void compareSort(int length, int sortArray[])
 {
-=======
->>>>>>> master:Homework_3/3_1_ex/3_1_ex/3_1_ex.cpp
 	quickSort(sortArray, 0, length - 1);
 	for (int i = 0; i < length - 1; ++i)
 	{
