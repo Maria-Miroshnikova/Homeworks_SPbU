@@ -15,7 +15,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD:Homework_3/3_3_ex/3_3_ex/3_3_ex.vcxproj.filters
     <ClCompile Include="3_3_ex.cpp">
+=======
+    <ClCompile Include="3_1_ex.cpp">
+>>>>>>> master:Homework_3/3_1_ex/3_1_ex/3_1_ex.vcxproj.filters
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
