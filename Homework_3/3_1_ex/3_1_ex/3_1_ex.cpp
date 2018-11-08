@@ -105,7 +105,7 @@ void quickSort(int sortArray[], int left, int right)
 	int supportElementIndex = medianElement(sortArray, left, right);
 	if (supportElementIndex >= 0)
 	{
-		int supportElement = sortArray[supportElementIndex];
+		const int supportElement = sortArray[supportElementIndex];
 		int indexLeft = left;
 		int indexRight = right;
 		while (indexLeft < indexRight)
