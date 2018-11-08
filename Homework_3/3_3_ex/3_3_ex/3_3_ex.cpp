@@ -94,45 +94,44 @@ void insertionSort(int sortArray[], int left, int rigth)
 	}
 }
 
-void quickSort(int length, int sortArray[], int left, int right)
+void quickSort(int sortArray[], int left, int right)
 {
+	int length = right - left + 1;
 	if (length < 10)
 	{
 		insertionSort(sortArray, left, right);
+		return;
+	}
+	int supportElementIndex = medianElement(sortArray, left, right);
+	if (supportElementIndex >= 0)
+	{
+		const int supportElement = sortArray[supportElementIndex];
+		int indexLeft = left;
+		int indexRight = right;
+		while (indexLeft < indexRight)
+		{
+			while ((sortArray[indexLeft] <= supportElement) && (indexLeft < indexRight))
+			{
+				++indexLeft;
+			}
+			while ((sortArray[indexRight] > supportElement) && (indexLeft < indexRight))
+			{
+				--indexRight;
+			}
+			swap(sortArray, indexLeft, indexRight);
+		}
+		int left1 = left;
+		int right1 = indexLeft - 1;
+		int left2 = indexLeft;
+		int right2 = right;
+		int length2 = length - left2;
+		int length1 = length - length2;
+		quickSort(sortArray, left1, right1);
+		quickSort(sortArray, left2, right2);
 	}
 	else
 	{
-		int supportElementIndex = medianElement(sortArray, left, right);
-		if (supportElementIndex >= 0)
-		{
-			int supportElement = sortArray[supportElementIndex];
-			int indexLeft = left;
-			int indexRight = right;
-			while (indexLeft < indexRight)
-			{
-				while ((sortArray[indexLeft] <= supportElement) && (indexLeft < indexRight))
-				{
-					++indexLeft;
-				}
-				while ((sortArray[indexRight] > supportElement) && (indexLeft < indexRight))
-				{
-					--indexRight;
-				}
-				swap(sortArray, indexLeft, indexRight);
-			}
-			int left1 = left;
-			int right1 = indexLeft - 1;
-			int left2 = indexLeft;
-			int right2 = right;
-			int length2 = length - left2;
-			int length1 = length - length2;
-			quickSort(length1, sortArray, left1, right1);
-			quickSort(length2, sortArray, left2, right2);
-		}
-		else
-		{
-			insertionSort(sortArray, left, right);
-		}
+		insertionSort(sortArray, left, right);
 	}
 }
 
@@ -186,7 +185,7 @@ void compareFind(int length, int sortArray[], int answer)
 
 void compareSort(int length, int sortArray[])
 {
-	quickSort(length, sortArray, 0, length - 1);
+	quickSort(sortArray, 0, length - 1);
 	for (int i = 0; i < length - 1; ++i)
 	{
 		assert(sortArray[i] <= sortArray[i + 1]);
@@ -229,7 +228,7 @@ int main()
 	printf("\n");
 	int left = 0;
 	int right = length - 1;
-	quickSort(length, sortArray, left, right);
+	quickSort(sortArray, left, right);
 	outputArray(length, sortArray);
 	printf("\n");
 	int oftenElement = findOftenElement(length, sortArray);
