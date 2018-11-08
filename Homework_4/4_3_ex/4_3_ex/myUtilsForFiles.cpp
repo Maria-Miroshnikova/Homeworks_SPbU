@@ -40,20 +40,17 @@ void readStartPhoneBook(PhoneBookEntry phoneBook[], int *indexLastEntry, FILE *p
 	{
 		return;
 	}
-	else
+	while (!feof(phonebook))
 	{
-		while (!feof(phonebook))
+		const int maxLength = 90;
+		char *buffer = new char[maxLength] {};
+		char *checkReading = fgets(buffer, maxLength, phonebook);
+		if (!checkReading)
 		{
-			const int maxLength = 90;
-			char *buffer = new char[maxLength] {};
-			char *checkReading = fgets(buffer, maxLength, phonebook);
-			if (!checkReading)
-			{
-				delete[] buffer;
-				break;
-			}
-			addEntry(phoneBook, createEntry(buffer, maxLength), indexLastEntry);
 			delete[] buffer;
+			break;
 		}
+		addEntry(phoneBook, createEntry(buffer, maxLength), indexLastEntry);
+		delete[] buffer;
 	}
 }
