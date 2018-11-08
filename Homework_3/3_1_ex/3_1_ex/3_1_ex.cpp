@@ -100,40 +100,38 @@ void quickSort(int sortArray[], int left, int right)
 	if (length < 10)
 	{
 		insertionSort(sortArray, left, right);
+		return;
+	}
+	int supportElementIndex = medianElement(sortArray, left, right);
+	if (supportElementIndex >= 0)
+	{
+		int supportElement = sortArray[supportElementIndex];
+		int indexLeft = left;
+		int indexRight = right;
+		while (indexLeft < indexRight)
+		{
+			while ((sortArray[indexLeft] <= supportElement) && (indexLeft < indexRight))
+			{
+				++indexLeft;
+			}
+			while ((sortArray[indexRight] > supportElement) && (indexLeft < indexRight))
+			{
+				--indexRight;
+			}
+			swap(sortArray, indexLeft, indexRight);
+		}
+		int left1 = left;
+		int right1 = indexLeft - 1;
+		int left2 = indexLeft;
+		int right2 = right;
+		int length2 = length - left2;
+		int length1 = length - length2;
+		quickSort(sortArray, left1, right1);
+		quickSort(sortArray, left2, right2);
 	}
 	else
 	{
-		int supportElementIndex = medianElement(sortArray, left, right);
-		if (supportElementIndex >= 0)
-		{
-			int supportElement = sortArray[supportElementIndex];
-			int indexLeft = left;
-			int indexRight = right;
-			while (indexLeft < indexRight)
-			{
-				while ((sortArray[indexLeft] <= supportElement) && (indexLeft < indexRight))
-				{
-					++indexLeft;
-				}
-				while ((sortArray[indexRight] > supportElement) && (indexLeft < indexRight))
-				{
-					--indexRight;
-				}
-				swap(sortArray, indexLeft, indexRight);
-			}
-			int left1 = left;
-			int right1 = indexLeft - 1;
-			int left2 = indexLeft;
-			int right2 = right;
-			int length2 = length - left2;
-			int length1 = length - length2;
-			quickSort(sortArray, left1, right1);
-			quickSort(sortArray, left2, right2);
-		}
-		else
-		{
-			insertionSort(sortArray, left, right);
-		}
+		insertionSort(sortArray, left, right);
 	}
 }
 
