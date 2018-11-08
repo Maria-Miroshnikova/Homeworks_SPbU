@@ -94,8 +94,9 @@ void insertionSort(int sortArray[], int left, int right)
 	}
 }
 
-void quickSort(int length, int sortArray[], int left, int right)
+void quickSort(int sortArray[], int left, int right)
 {
+	int length = right - left + 1;
 	if (length < 10)
 	{
 		insertionSort(sortArray, left, right);
@@ -126,8 +127,8 @@ void quickSort(int length, int sortArray[], int left, int right)
 			int right2 = right;
 			int length2 = length - left2;
 			int length1 = length - length2;
-			quickSort(length1, sortArray, left1, right1);
-			quickSort(length2, sortArray, left2, right2);
+			quickSort(sortArray, left1, right1);
+			quickSort(sortArray, left2, right2);
 		}
 		else
 		{
@@ -155,7 +156,7 @@ void outputArray(int length, int block[])
 
 void compare(int length, int sortArray[])
 {
-	quickSort(length, sortArray, 0, length - 1);
+	quickSort(sortArray, 0, length - 1);
 	for (int i = 0; i < length - 1; ++i)
 	{
 		assert(sortArray[i] <= sortArray[i + 1]);
@@ -193,7 +194,7 @@ int main()
 	printf("\n");
 	int left = 0;
 	int right = length - 1;
-	quickSort(length, sortArray, left, right);
+	quickSort(sortArray, left, right);
 	outputArray(length, sortArray);
 	delete[] sortArray;
 	return 0;
