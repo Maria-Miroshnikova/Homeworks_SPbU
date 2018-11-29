@@ -1,8 +1,11 @@
 #pragma once
 #include <vector>
 #include <string>
+#include "myList.h"
 
-/// структура, содержаща€ в себе слово и его вхождение в текст
+struct List;
+
+/// структура, содержаща€ слово и количество его вхождений
 struct HashTableEntry
 {
 	std::string word;
@@ -13,7 +16,7 @@ struct HashTableEntry
 /// с хэшем, равным индексу соответствующей €чейки вектора
 struct HashTable
 {
-	std::vector<std::vector<HashTableEntry>> bucket;
+	std::vector<List*> bucket;
 };
 
 /// создает таблицу заданного размера и возвращает указатель на нее.
@@ -30,3 +33,6 @@ void addEntryHashTable(HashTable* hashTable, std::string& newWord);
 /// считает коэффициент заполнени€ таблицы, максимальную и минимальную длины в сегменте списка
 /// в заранее заведенные нулевые переменные под каждую из характеристик.
 void computePropertiesHashTable(HashTable* hashTable, float& loadFactor, int& maxListLength, float& middleListLength);
+
+/// удал€ет хэш-таблицу (удал€ет списки из каждой €чейки хэш-вектора и указатель на вектор).
+void deleteHashTable(HashTable* hashTable);

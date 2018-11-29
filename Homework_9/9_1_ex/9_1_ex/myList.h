@@ -3,42 +3,48 @@
 #include <string>
 #include "myHashTable.h"
 
-/// элемент списка, содержащий значение и указатель на следующий элемент
+struct HashTableEntry;
+
+/// структура, представляющая элемент списка, содержащий элемент хэш-таблицы
+/// и указатель на следующий элемент списка.
 struct ListEntry
 {
-	string word;
-
+	HashTableEntry* element;
 	ListEntry* next;
 };
 
-/// указатель на начало списка
+/// структура, содержащая указатель на начало списка.
 struct List
 {
 	ListEntry* head;
 };
 
-/// проверяет, является ли список пустым
+/// проверяет, является ли список пустым.
 bool isEmptyList(List* list);
 
-/// создает пустой список и возвращает указатель на него
+/// создает пустой список и возвращает указатель на него.
 List* createList();
 
-/// добавляет запись в сортированный список, сохраняя порядок
-void addEntryList(ListEntry*& previousEntry, int newValue);
+/// возвращает указатель на элемент списка, в котором записано
+/// такое же слово, иначе возвращает нулевой указатель.
+ListEntry* findListEntry(ListEntry*& previousEntry, std::string& findWord);
 
-/// записывает в вектор все содержимое списка (в возврастающем порядке)
-void makeOutputList(ListEntry*& previousEntry, std::vector<int>& sequence);
+/// добавляет запись в сортированный список, сохраняя порядок.
+void addListEntry(ListEntry*& previousEntry, std::string& newWord);
+
+/// записывает в вектор все содержимое списка (в возврастающем порядке).
+void makeOutputList(ListEntry*& previousEntry, std::vector<HashTableEntry*>& sequence);
 
 /// отправляет запрос на запись списка в вектор, если список не пуст,
 /// и возвращает true, иначе возвращает false.
-bool outputList(List* list, std::vector<int>& sequence);
+bool outputList(List* list, std::vector<HashTableEntry*>& sequence);
 
 /// удаляет запись из списка и возвращает true, если она там была,
-/// иначе возвращает false (в частности, если список был пуст)
-bool deleteEntryList(ListEntry*& previousEntry, int deleteValue);
+/// иначе возвращает false (в частности, если список был пуст).
+bool deleteListEntry(ListEntry*& previousEntry, std::string& deleteWord);
 
-/// удаляет список
+/// удаляет список.
 void deleteList(List* list);
 
-/// считает длину списка в заранее заведенные нулевые переменные под каждую из характеристик.
-void sizeList(ListEntry*& previousEntry, int& size);
+/// возвращает длину списка
+int sizeOfList(List* list);

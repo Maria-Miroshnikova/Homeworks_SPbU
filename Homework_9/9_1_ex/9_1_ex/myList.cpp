@@ -1,5 +1,6 @@
 #include "myList.h"
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -14,22 +15,39 @@ bool isEmptyList(List* list)
 	return (list->head == nullptr);
 }
 
-void addEntryList(ListEntry*& previousEntry, int newValue)
+ListEntry* findListEntry(ListEntry*& previousEntry, string& findWord)
 {
-	if ((previousEntry == nullptr) || (previousEntry->value > newValue))
+	if ((previousEntry == nullptr) || (previousEntry->element->word > findWord))
 	{
-		ListEntry* newEntry = new ListEntry{ newValue, nullptr };
+		return nullptr;
+	}
+	else if (previousEntry->element->word < findWord)
+	{
+		return findListEntry(previousEntry->next, findWord);
+	}
+	else
+	{
+		return previousEntry;
+	}
+}
+
+void addListEntry(ListEntry*& previousEntry, string& newWord)
+{
+	if ((previousEntry == nullptr) || ( previousEntry->element->word > newWord))
+	{
+		HashTableEntry* newElement = new HashTableEntry { newWord, 1 };
+		ListEntry* newEntry = new ListEntry { newElement, nullptr };
 		ListEntry* nextEntry = previousEntry;
 		previousEntry = newEntry;
 		newEntry->next = nextEntry;
 	}
 	else
 	{
-		addEntryList(previousEntry->next, newValue);
+		addListEntry(previousEntry->next, newWord);
 	}
 }
 
-void makeOutputList(ListEntry*& previousEntry, vector<int>& sequence)
+void makeOutputList(ListEntry*& previousEntry, vector<HashTableEntry*>& sequence)
 {
 	if (previousEntry == nullptr)
 	{
@@ -37,12 +55,12 @@ void makeOutputList(ListEntry*& previousEntry, vector<int>& sequence)
 	}
 	else
 	{
-		sequence.push_back(previousEntry->value);
+		sequence.push_back(previousEntry->element);
 		makeOutputList(previousEntry->next, sequence);
 	}
 }
 
-bool outputList(List* list, vector<int>& sequence)
+bool outputList(List* list, vector<HashTableEntry*>& sequence)
 {
 	if (isEmptyList(list))
 	{
@@ -55,20 +73,22 @@ bool outputList(List* list, vector<int>& sequence)
 	}
 }
 
-bool deleteEntryList(ListEntry*& previousEntry, int deleteValue)
+bool deleteListEntry(ListEntry*& previousEntry, string& deleteWord)
 {
-	if ((previousEntry == nullptr) || (previousEntry->value > deleteValue))
+	if ((previousEntry == nullptr) || (previousEntry->element->word > deleteWord))
 	{
 		return false;
 	}
-	else if (previousEntry->value < deleteValue)
+	else if (previousEntry->element->word < deleteWord)
 	{
-		deleteEntryList(previousEntry->next, deleteValue);
+		return deleteListEntry(previousEntry->next, deleteWord);
 	}
 	else
 	{
 		ListEntry* deleteEntry = previousEntry;
+		HashTableEntry* deleteElement = deleteEntry->element;
 		previousEntry = previousEntry->next;
+		delete deleteElement;
 		delete deleteEntry;
 		return true;
 	}
@@ -78,12 +98,12 @@ void deleteList(List* list)
 {
 	while (list->head != nullptr)
 	{
-		deleteEntryList(list->head, list->head->value);
+		deleteListEntry(list->head, list->head->element->word);
 	}
 	delete list;
 }
 
-void sizeList(ListEntry*& previousEntry, int& size)
+void countSizeOfList(ListEntry*& previousEntry, int& size)
 {
 	if (previousEntry == nullptr)
 	{
@@ -92,6 +112,13 @@ void sizeList(ListEntry*& previousEntry, int& size)
 	else
 	{
 		++size;
-		sizeList(previousEntry->next, size);
+		countSizeOfList(previousEntry->next, size);
 	}
+}
+
+int sizeOfList(List* list)
+{
+	int size = 0;
+	countSizeOfList(list->head, size);
+	return size;
 }

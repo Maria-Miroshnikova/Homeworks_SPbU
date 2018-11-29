@@ -2,10 +2,19 @@
 #include <fstream>
 #include <string>
 #include "myHashTable.h"
+#include "myList.h"
 
 using namespace std;
 
-void outputWordsFromHash(HashTable* hashTable, float loadFactor)
+void outputVector(vector<HashTableEntry*>& vectorOut)
+{
+	for (int i = 0; i < vectorOut.size(); ++i)
+	{
+		cout << vectorOut[i]->word << " ( " << vectorOut[i]->count << " )" << endl;
+	}
+}
+
+void outputWordsFromHash(HashTable* hashTable, float loadFactor, vector<HashTableEntry*>& listForOutput)
 {
 	if (!loadFactor)
 	{
@@ -14,14 +23,12 @@ void outputWordsFromHash(HashTable* hashTable, float loadFactor)
 	}
 	for (int i = 0; i < hashTable->bucket.size(); ++i)
 	{
-		cout << endl << "bucket number - " << i << " :" << endl;
-		if (!hashTable->bucket[i].empty())
+		// cout << endl << "bucket number - " << i << " :" << endl;
+		if (outputList(hashTable->bucket[i], listForOutput))
 		{
-			for (int j = 0; j < hashTable->bucket[i].size(); ++j)
-			{
-				cout << hashTable->bucket[i][j].word << " ( " << hashTable->bucket[i][j].count << " )" << endl;
-			}
+			outputVector(listForOutput);
 		}
+		listForOutput.resize(0);
 	}
 }
 
@@ -32,7 +39,6 @@ int readDataFromFile(string& data, istream& file)
 		return -1;
 	}
 	
-	string simbols = " .,?!-/|\:;@#$%^&*()+=№<>`~{}[]";
 	file >> data;
 
 	for (int i = 0; i < data.length(); ++i)
@@ -43,15 +49,11 @@ int readDataFromFile(string& data, istream& file)
 		{
 			break;
 		}
-		for (int indexSimbol = 0; indexSimbol < simbols.length(); ++indexSimbol)
+		if ((!((data[i] >= '0') && (data[i] <= '9'))) && (!((data[i] >= 'A') && (data[i] <= 'Z'))) && (!((data[i] >= 'a') && (data[i] <= 'z'))))
 		{
-			if (data[i] == simbols[indexSimbol])
-			{
-				data.erase(data.begin() + i);
-				symbol = true;			
-				--i;
-				break;
-			}
+			data.erase(data.begin() + i);
+			symbol = true;			
+			--i;
 		}
 		
 		if (!symbol) // замена заглавной буквы на строчную
@@ -62,18 +64,14 @@ int readDataFromFile(string& data, istream& file)
 	return data.length();
 }
 
-void workingWithData(ifstream& dataFile)
-{	
-	const int size = 10;
-	HashTable* hashTable = createHashTable(size);
-	string data = "";
-	int count = 0;
-
+void makeHashTable(istream& dataFile, HashTable* hashTable, string& data)
+{
 	while (!dataFile.eof())
 	{
 		int checkReading = readDataFromFile(data, dataFile);
 		if (checkReading == -1) // не получилось считать слово
 		{
+			data = "";
 			break;
 		}
 		if (checkReading == 0) // слово состоит только из символов
@@ -85,16 +83,31 @@ void workingWithData(ifstream& dataFile)
 			addEntryHashTable(hashTable, data);
 			data = "";
 		}
-		++count;
 	}
+}
+
+void workingWithData(istream& dataFile)
+{	
+	const int size = 10;
+	HashTable* hashTable = createHashTable(size);
+	string data = "";
+
+	makeHashTable(dataFile, hashTable, data);
+
 	float loadFactor = 0;
 	int maxListLength = 0;
 	float middleListLength = 0;
 	computePropertiesHashTable(hashTable, loadFactor, maxListLength, middleListLength);
-	outputWordsFromHash(hashTable, loadFactor);
-	cout << endl << endl << "Properties:" << endl;
+
+	vector<HashTableEntry*> listForOutput;
+	outputWordsFromHash(hashTable, loadFactor, listForOutput);
+	
+	cout << endl << endl <<"---------------------------------------" << endl;
+	cout << "Properties:" << endl;
 	cout << endl << "Load factor is: " << loadFactor << "." << endl;
 	cout << endl << "Max length of list in bucket is: " << maxListLength << "." << endl;
 	cout << endl << "Middle length of list in bucket is: " << middleListLength << "." << endl;
+	cout << "---------------------------------------" << endl;
 
+	deleteHashTable(hashTable);
 }
