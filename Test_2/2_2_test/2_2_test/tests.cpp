@@ -45,6 +45,7 @@ void tests()
 			addListEntry(testList, strtol(space, nullptr, 10));
 			space = strtok(NULL, " ");
 		}
+		delete[] dataChar;
 
 		readTestDataFromFile(answer, testAnswerFile);
 
