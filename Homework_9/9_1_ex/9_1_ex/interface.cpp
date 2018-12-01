@@ -24,7 +24,7 @@ void outputWordsFromHash(HashTable* hashTable, float loadFactor, vector<HashTabl
 	for (int i = 0; i < hashTable->bucket.size(); ++i)
 	{
 		// cout << endl << "bucket number - " << i << " :" << endl;
-		if (outputList(hashTable->bucket[i], listForOutput))
+		if(makeOutputList(hashTable->bucket[i], listForOutput))
 		{
 			outputVector(listForOutput);
 		}

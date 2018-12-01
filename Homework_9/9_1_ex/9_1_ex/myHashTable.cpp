@@ -42,7 +42,7 @@ HashTableEntry* findEntryHashTable(HashTable* hashTable, string& findWord)
 	{
 		return nullptr;
 	}
-	ListEntry* foundListEntry = findListEntry(hashTable->bucket[hash]->head, findWord);
+	ListEntry* foundListEntry = findListEntry(hashTable->bucket[hash], findWord);
 	if (!foundListEntry)
 	{
 		return nullptr;
@@ -56,7 +56,8 @@ void addEntryHashTable(HashTable* hashTable, string& newWord)
 	HashTableEntry* foundHashEntry = findEntryHashTable(hashTable, newWord);
 	if (!foundHashEntry)
 	{
-		addListEntry(hashTable->bucket[hash]->head, newWord);
+		HashTableEntry* newEntry = new HashTableEntry { newWord, 1 };
+		addListEntry(hashTable->bucket[hash], newEntry);
 	}
 	else
 	{
@@ -73,7 +74,7 @@ void computePropertiesHashTable(HashTable* hashTable, float& loadFactor, int& ma
 		if (!isEmptyList(hashTable->bucket[i]))
 		{
 			++countNotEmptyEntries;
-			int sizeTmp = sizeOfList(hashTable->bucket[i]);
+			int sizeTmp = countSizeOfList(hashTable->bucket[i]);
 			listLengthSumm += sizeTmp;
 //			cout << endl << "size of bucket " << i << " is: " << sizeTmp << endl;
 			if (sizeTmp > maxListLength)

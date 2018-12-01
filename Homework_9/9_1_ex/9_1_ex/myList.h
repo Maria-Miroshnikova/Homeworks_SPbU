@@ -27,24 +27,21 @@ List* createList();
 
 /// возвращает указатель на элемент списка, в котором записано
 /// такое же слово, иначе возвращает нулевой указатель.
-ListEntry* findListEntry(ListEntry*& previousEntry, std::string& findWord);
+ListEntry* findListEntry(List* list, std::string& findWord);
 
 /// добавляет запись в сортированный список, сохраняя порядок.
-void addListEntry(ListEntry*& previousEntry, std::string& newWord);
+void addListEntry(List* list, HashTableEntry* addEntry);
 
-/// записывает в вектор все содержимое списка (в возврастающем порядке).
-void makeOutputList(ListEntry*& previousEntry, std::vector<HashTableEntry*>& sequence);
-
-/// отправляет запрос на запись списка в вектор, если список не пуст,
+/// записывает список в вектор, если список не пуст,
 /// и возвращает true, иначе возвращает false.
-bool outputList(List* list, std::vector<HashTableEntry*>& sequence);
+bool makeOutputList(List* list, std::vector<HashTableEntry*>& sequence);
 
 /// удаляет запись из списка и возвращает true, если она там была,
 /// иначе возвращает false (в частности, если список был пуст).
-bool deleteListEntry(ListEntry*& previousEntry, std::string& deleteWord);
+bool deleteListEntry(List* list, std::string& deleteWord);
 
 /// удаляет список.
 void deleteList(List* list);
 
 /// возвращает длину списка
-int sizeOfList(List* list);
+int countSizeOfList(List* list);

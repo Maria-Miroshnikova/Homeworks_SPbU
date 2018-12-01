@@ -80,8 +80,8 @@ void testingFile(string& testFileName, istream& testSizeFile, istream& testPrope
 				{
 					if (!isEmptyList(testHashTable->bucket[i]))
 					{
-						makeOutputList(testHashTable->bucket[i]->head, listFromHashTable);
-						int sizeList = sizeOfList(testHashTable->bucket[i]);
+						makeOutputList(testHashTable->bucket[i], listFromHashTable);
+						int sizeList = countSizeOfList(testHashTable->bucket[i]);
 						for (int j = 0; j < sizeList; ++j)
 						{
 							readTestDataFromFileWithSpace(answer, testAnswerFile);
