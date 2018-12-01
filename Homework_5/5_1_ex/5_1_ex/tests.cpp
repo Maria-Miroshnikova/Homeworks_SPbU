@@ -43,7 +43,7 @@ void tests()
 			readDataFromFile(data, testDataFile);
 			while ((data != "\0") && (data != "\n"))
 			{
-				addEntryList(testList->head, strtol(data.c_str(), nullptr, 10));
+				addListEntry(testList, strtol(data.c_str(), nullptr, 10));
 				data = "";
 				getline(testDataFile, data);
 			}
@@ -55,7 +55,7 @@ void tests()
 			readDataFromFile(answer, testAnswerFile);
 			while ((data != "\0") && (data != "\n"))
 			{
-				assert(deleteEntryList(testList->head, strtol(data.c_str(), nullptr, 10)) == strtol(answer.c_str(), nullptr, 10));
+				assert(deleteListEntry(testList, strtol(data.c_str(), nullptr, 10)) == strtol(answer.c_str(), nullptr, 10));
 
 				data = "";
 				answer = "";
@@ -68,7 +68,7 @@ void tests()
 		else if (command == "3")
 		{
 			readDataFromFile(answer, testAnswerFile);
-			assert(outputList(testList, sequence) == strtol(answer.c_str(), nullptr, 10));
+			assert(makeOutputList(testList, sequence) == strtol(answer.c_str(), nullptr, 10));
 
 			if (strtol(answer.c_str(), nullptr, 10))
 			{

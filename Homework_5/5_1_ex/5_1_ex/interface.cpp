@@ -57,7 +57,7 @@ void getCommand()
 			}
 			else
 			{
-				addEntryList(list->head, parameterInt);
+				addListEntry(list, parameterInt);
 			}
 			parameter = "";
 		}
@@ -72,7 +72,7 @@ void getCommand()
 			}
 			else
 			{
-				if (!deleteEntryList(list->head, parameterInt))
+				if (!deleteListEntry(list, parameterInt))
 				{
 					cout << endl << "The number " << parameterInt << " NOT found in the list!" << endl;
 				}
@@ -81,7 +81,7 @@ void getCommand()
 		}
 		else if (command == commands[3])
 		{
-			if (!outputList(list, listForOutput))
+			if (!makeOutputList(list, listForOutput))
 			{
 				cout << endl << "The list is empty!" << endl;
 			}

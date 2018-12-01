@@ -14,71 +14,120 @@ bool isEmptyList(List* list)
 	return (list->head == nullptr);
 }
 
-void addEntryList(ListEntry*& previousEntry, int newValue)
+void addListEntry(List* list, int newValue)
 {
-	if ((previousEntry == nullptr) || (previousEntry->value > newValue))
+	ListEntry* newEntry = new ListEntry{ newValue, nullptr };
+	
+	if (isEmptyList(list))   // если список пуст
 	{
-		ListEntry* newEntry = new ListEntry{ newValue, nullptr };
-		ListEntry* nextEntry = previousEntry;
-		previousEntry = newEntry;
-		newEntry->next = nextEntry;
-	}
-	else
-	{
-		addEntryList(previousEntry->next, newValue);
-	}
-}
-
-void makeOutputList(ListEntry*& previousEntry, vector<int>& sequence)
-{
-	if (previousEntry == nullptr)
-	{
+		list->head = newEntry;
 		return;
 	}
-	else
+
+	ListEntry* entry = list->head;
+	if (entry->value > newValue)   // если место элемента сразу в голове списка
 	{
-		sequence.push_back(previousEntry->value);
-		makeOutputList(previousEntry->next, sequence);
+		list->head = newEntry;
+		newEntry->next = entry;
+		return;
+	}
+	
+	while (entry->value <= newValue)
+	{
+		if (entry->next == nullptr)   // если место элемента в конце списка
+		{
+			entry->next = newEntry;
+			break;
+		}
+		else if (entry->next->value > newValue)   //   если место элемента между рассматриваемым и следующим элементами
+		{
+			ListEntry* nextEntry = entry->next;
+			entry->next = newEntry;
+			newEntry->next = nextEntry;
+			break;
+		}
+		else   // если можно опуститься вниз по списку
+		{
+			entry = entry->next;
+		}
 	}
 }
 
-bool outputList(List* list, vector<int>& sequence)
+bool makeOutputList(List* list, vector<int>& sequence)
 {
 	if (isEmptyList(list))
 	{
 		return false;
 	}
-	else
+	
+	ListEntry* entry = list->head;
+	while (entry != nullptr)
 	{
-		makeOutputList(list->head, sequence);
-		return true;
+		sequence.push_back(entry->value);
+		entry = entry->next;
 	}
+	return true;
 }
 
-bool deleteEntryList(ListEntry*& previousEntry, int deleteValue)
+bool deleteListEntry(List* list, int deleteValue)
 {
-	if ((previousEntry == nullptr) || (previousEntry->value > deleteValue))
+	if (isEmptyList(list))   // если список пуст
 	{
 		return false;
 	}
-	else if (previousEntry->value < deleteValue)
+
+	ListEntry* deleteEntry = list->head;
+
+	if (deleteEntry->value == deleteValue) // если искомый элемент сразу в голове списка
 	{
-		deleteEntryList(previousEntry->next, deleteValue);
-	}
-	else
-	{
-		ListEntry* deleteEntry = previousEntry;
-		previousEntry = previousEntry->next;
+		list->head = deleteEntry->next;
 		delete deleteEntry;
 		return true;
+	}
+
+	if (deleteEntry->value > deleteValue)   // если в списке только большие элементы
+	{
+		return false;
+	}
+
+	while (deleteEntry->value < deleteValue)   
+	{
+		if (deleteEntry->next == nullptr)   //  если дошли до конца списка
+		{
+			return false;
+		}
+		else if (deleteEntry->next->value > deleteValue)   // если следующий элемент больше, а рассматриваемый - меньше искомого
+		{
+			return false;
+		}
+		else if (deleteEntry->next->value < deleteValue)   // если можно спуститься по списку
+		{
+			deleteEntry = deleteEntry->next;
+		}
+		else   // следующий элемент - искомый
+		{
+			if (deleteEntry->next->next == nullptr)   // если искомый элемент - последний в списке
+			{
+				delete deleteEntry->next;
+				deleteEntry->next = nullptr;
+				return true;
+			}
+			else   // если искомый элемент посреди списка
+			{
+				ListEntry* nextEntry = deleteEntry->next->next;
+				delete deleteEntry->next;
+				deleteEntry->next = nextEntry;
+				return true;
+			}
+		}
 	}
 }
 
 void deleteList(List* list)
 {
-	while (list->head != nullptr)
+	while (!isEmptyList(list))
 	{
-		deleteEntryList(list->head, list->head->value);
+		deleteListEntry(list, list->head->value);
 	}
 	delete list;
 }
