@@ -1,0 +1,8 @@
+This is list of numbers with positions (from 0!).
+
+The commands are:
+ 0 - exit
+ 1 - add number to position
+ 2 - delete number from position 
+ 3 - output the list
+ HELP - output list of commands
