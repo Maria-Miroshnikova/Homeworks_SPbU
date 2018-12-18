@@ -44,10 +44,15 @@ void tests()
 			readDataFromFile(data, testDataFile);
 			while ((data != "\0") && (data != "\n"))
 			{
-				addListEntry(testList, strtol(data.c_str(), nullptr, 10));
+				readDataFromFile(secondData, testDataFile);
+
+				readDataFromFile(answer, testAnswerFile);
+				assert(addListEntry(testList, strtol(data.c_str(), nullptr, 10), strtol(secondData.c_str(), nullptr, 10)) == strtol(answer.c_str(), nullptr, 10));
+				
 				data = "";
 				getline(testDataFile, data);
 			}
+			secondData = "";
 			data = "";
 		}
 		else if (command == "2")
