@@ -83,10 +83,10 @@ void tests()
 				char *answerChar = new char[strlen(answer.c_str()) + 1]{};
 				strcpy(answerChar, answer.c_str());
 				char *space = strtok(answerChar, " ");
-				while (space != NULL)
+				while (space != nullptr)
 				{
 					sequenceFromFile.push_back(strtol(space, nullptr, 10));
-					space = strtok(NULL, " ");
+					space = strtok(nullptr, " ");
 				}
 				assert(sequence == sequenceFromFile);
 				delete[] answerChar;
