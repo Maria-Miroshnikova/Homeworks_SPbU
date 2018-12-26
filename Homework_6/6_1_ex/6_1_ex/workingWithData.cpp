@@ -49,7 +49,7 @@ int countExpressionValue(int amountOfData)
 
 void workingWithData()
 {
-	cout << endl << "Please, input the count of numbers and operations: ";
+	cout << endl << "Please, input the count of numbers and operations (*, /, +, - only!): ";
 	int amountOfData = 0;
 	cin >> amountOfData;
 
