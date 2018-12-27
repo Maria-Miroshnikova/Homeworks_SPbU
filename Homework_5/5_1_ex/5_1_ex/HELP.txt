@@ -1,0 +1,8 @@
+This is a sorted list of numbers (increasing sequence).
+
+The commands are:
+ 0 - exit
+ 1 - add number
+ 2 - delete number
+ 3 - output all numbers
+ HELP - output list of commands
