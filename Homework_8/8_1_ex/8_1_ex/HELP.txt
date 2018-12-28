@@ -1,0 +1,15 @@
+This is an assosiated array with keys and their values.
+
+The commands are:
+
+0 - exit
+
+1 - add key with value
+
+2 - get value (by key)
+
+3 - check if the key exists in the array
+
+4 - delete key with value
+
+HELP - output list of commands
