@@ -10,7 +10,10 @@ int main()
 	tests();
 	cout << "Tests are OK!" << endl;
 
-	workingWithData();
+	if (!workingWithData())
+	{
+		return 1;
+	}
 
 	return 0;
 }
