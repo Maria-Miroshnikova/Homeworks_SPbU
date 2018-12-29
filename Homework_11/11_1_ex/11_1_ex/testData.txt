@@ -1,0 +1,10 @@
+//	string data = "abcabeabcabd";
+//	string sample = "abcabd";
+//	string data = "abcabeabcabd";
+//	string sample = "f";
+//	string data = "aaa";
+//	string sample = "a";
+//	string data = "aaaab";
+//	string sample = "ab";
+	//string data = "aabaabaaaabaabaaab";
+//	string data = "aabaa@aabaabaaaabaabaaab";
