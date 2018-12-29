@@ -21,12 +21,13 @@ void tests()
 
 	while (!feof(testData))
 	{
-		// считываю строку из "testData.txt", преобразую в запись, добавляю в тестовый массив-справочник
+		// Е„Г·ДЌЕ€Е±ГўЕ•ЕЈ Е„Е€Д‘Г®Д™Гі ДЌГ§ "testData.txt", ДЏД‘ДєГ®ГЎД‘Е•Г§ГіЕЈ Гў Г§Е•ДЏДЌЕ„Гј, Г¤Г®ГЎЕ•ГўГ«Л™ЕЈ Гў Е€ДєЕ„Е€Г®ГўЕ±Г© Д›Е•Е„Е„ДЌГў-Е„ДЏД‘Е•ГўГ®Г·Г­ДЌД™
 		const int maxLength = 90;
 		char *bufferEntry = new char[maxLength] {};
 		char *checkReading = fgets(bufferEntry, maxLength, testData);
 		if (!checkReading)
 		{
+			delete[] bufferEntry;
 			break;
 		}
 		int checkAddEntry = -1;
@@ -42,26 +43,28 @@ void tests()
 		delete[] bufferEntry;
 
 
-		// считываю из "testAnswer.txt" строку в односимвольный буфер, полагая,
-		// что строка представляет собой одну цифру - ожидаемый результат addEntry
-		// от добавления строки из "testData.txt", и сравниваю ее с checkAddEntry -
-		// результатом работы addEntry
+		// Е„Г·ДЌЕ€Е±ГўЕ•ЕЈ ДЌГ§ "testAnswer.txt" Е„Е€Д‘Г®Д™Гі Гў Г®Г¤Г­Г®Е„ДЌД›ГўГ®Г«ГјГ­Е±Г© ГЎГіГґДєД‘, ДЏГ®Г«Е•ДѓЕ•Л™,
+		// Г·Е€Г® Е„Е€Д‘Г®Д™Е• ДЏД‘ДєГ¤Е„Е€Е•ГўГ«Л™ДєЕ€ Е„Г®ГЎГ®Г© Г®Г¤Г­Гі Г¶ДЌГґД‘Гі - Г®Д‡ДЌГ¤Е•ДєД›Е±Г© Д‘ДєГ§ГіГ«ГјЕ€Е•Е€ addEntry
+		// Г®Е€ Г¤Г®ГЎЕ•ГўГ«ДєГ­ДЌЛ™ Е„Е€Д‘Г®Д™ДЌ ДЌГ§ "testData.txt", ДЌ Е„Д‘Е•ГўГ­ДЌГўЕ•ЕЈ ДєДє Е„ checkAddEntry -
+		// Д‘ДєГ§ГіГ«ГјЕ€Е•Е€Г®Д› Д‘Е•ГЎГ®Е€Е± addEntry
 		char *bufferAddEntry = new char[maxLength] {};
 		checkReading = fgets(bufferAddEntry, maxLength, testAnswer);
 		if (!checkReading)
 		{
+			delete[] bufferAddEntry;
 			break;
 		}
 		assert(((bufferAddEntry[0] - '0') == (checkAddEntry)) && ((bufferAddEntry[1]) == ('\n')));
 		delete[] bufferAddEntry;
 
 
-		// считываю строки из "testAnswer", пока не встречу пустую или конец файла
-		// i-ая строка, преобразованная в запись - ожидаемая i-ая запись массива справочника, сравниваю их
+		// Е„Г·ДЌЕ€Е±ГўЕ•ЕЈ Е„Е€Д‘Г®Д™ДЌ ДЌГ§ "testAnswer", ДЏГ®Д™Е• Г­Дє ГўЕ„Е€Д‘ДєГ·Гі ДЏГіЕ„Е€ГіЕЈ ДЌГ«ДЌ Д™Г®Г­ДєГ¶ ГґЕ•Г©Г«Е•
+		// i-Е•Л™ Е„Е€Д‘Г®Д™Е•, ДЏД‘ДєГ®ГЎД‘Е•Г§Г®ГўЕ•Г­Г­Е•Л™ Гў Г§Е•ДЏДЌЕ„Гј - Г®Д‡ДЌГ¤Е•ДєД›Е•Л™ i-Е•Л™ Г§Е•ДЏДЌЕ„Гј Д›Е•Е„Е„ДЌГўЕ• Е„ДЏД‘Е•ГўГ®Г·Г­ДЌД™Е•, Е„Д‘Е•ГўГ­ДЌГўЕ•ЕЈ ДЌЕ‘
 		char *bufferAnswer = new char[maxLength] {};
 		checkReading = fgets(bufferAnswer, maxLength, testAnswer);
 		if (!checkReading)
 		{
+			delete[] bufferAnswer;
 			break;
 		}
 		int i = 0;
